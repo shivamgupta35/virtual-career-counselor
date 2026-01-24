@@ -1,0 +1,14 @@
+[
+    {
+        "id": "d6333f7b-85c7-4202-b386-09682997a0b3",
+        "name": "Shivam Gupta",
+        "email": "3535guptashivam@gmail.com",
+        "password": "scrypt:32768:8:1$Z5v17Twwm5oXBOvW$7010ec1e6a45a1c5e18aca7ba54c5e6bbb5275c69a9301e88e21d52e7904d0d1767ae3a5a7c9de8c935a17a9b59ffbebcdc67a7d76693f2fd98634e7b03564e2"
+    },
+    {
+        "id": "18148ae0-ba04-4685-84b9-59fd38e1cd85",
+        "name": "SG",
+        "email": "shivam.gupta023@nmims.in",
+        "password": "scrypt:32768:8:1$UdiLvznYS72ou0Ni$8e5d87211dd331e34ff02c963affbc17ed44592ca8480e6daaf80e7e667de4d3c0e6f698e6ee17e283a2851dd9e940ef9e44d3bd0a72c1ca168a6046cde6aacc"
+    }
+]
