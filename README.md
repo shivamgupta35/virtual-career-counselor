@@ -24,3 +24,11 @@ python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
+
+Future Enhancements
+AWS DynamoDB integration
+EC2 deployment
+IAM-based security
+Notifications with AWS SNS
+
+Made with ❤️ by Shivam Gupta
