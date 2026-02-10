@@ -1,39 +1,36 @@
-import json
-import uuid
-from werkzeug.security import generate_password_hash, check_password_hash
+import boto3
+from botocore.exceptions import ClientError
 
-DB_PATH = "data/users.json"
+AWS_REGION = "us-east-1"
+TABLE_NAME = "users"
 
-def load_users():
-    with open(DB_PATH, "r") as f:
-        return json.load(f)
-
-def save_users(users):
-    with open(DB_PATH, "w") as f:
-        json.dump(users, f, indent=4)
+dynamodb = boto3.resource("dynamodb", region_name=AWS_REGION)
+users_table = dynamodb.Table(TABLE_NAME)
 
 def create_user(name, email, password):
-    users = load_users()
-
-    # prevent duplicate email
-    for u in users:
-        if u["email"] == email:
-            return None
-
-    user = {
-        "id": str(uuid.uuid4()),
-        "name": name,
-        "email": email,
-        "password": generate_password_hash(password)
-    }
-
-    users.append(user)
-    save_users(users)
-    return user
+    try:
+        users_table.put_item(
+            Item={
+                "email": email,
+                "name": name,
+                "password": password
+            },
+            ConditionExpression="attribute_not_exists(email)"
+        )
+        return True
+    except ClientError:
+        return False
 
 def authenticate_user(email, password):
-    users = load_users()
-    for user in users:
-        if user["email"] == email and check_password_hash(user["password"], password):
-            return user
-    return None
+    try:
+        response = users_table.get_item(Key={"email": email})
+        user = response.get("Item")
+
+        if user and user["password"] == password:
+            return {
+                "name": user["name"],
+                "email": user["email"]
+            }
+        return None
+    except ClientError:
+        return None
